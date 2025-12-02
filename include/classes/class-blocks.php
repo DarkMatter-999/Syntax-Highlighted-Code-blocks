@@ -2,12 +2,12 @@
 /**
  * Block Class file for the Plugin.
  *
- * @package DarkMatter_Package
+ * @package DM_Highlighted_Code_Blocks
  */
 
-namespace DarkMatter_Plugin;
+namespace DM_Highlighted_Code_Blocks;
 
-use DarkMatter_Plugin\Traits\Singleton;
+use DM_Highlighted_Code_Blocks\Traits\Singleton;
 
 /**
  * Block Class file for the Plugin.
@@ -24,7 +24,6 @@ class Blocks {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register' ) );
-		add_filter( 'block_categories_all', array( $this, 'add_custom_block_category' ), 10, 2 );
 	}
 
 	/**
@@ -34,28 +33,7 @@ class Blocks {
 	 */
 	public function register() {
 		register_block_type(
-			DMP_PLUGIN_PATH . 'assets/build/blocks/block'
-		);
-	}
-
-
-	/**
-	 * Add Custom block category.
-	 *
-	 * @param  array                   $categories Block Categories.
-	 * @param  WP_Block_Editor_Context $post       The current block editor context.
-	 * @return array
-	 */
-	public function add_custom_block_category( $categories, $post ) {    // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- no use of block context.
-		return array_merge(
-			$categories,
-			array(
-				array(
-					'slug'  => 'custom-category',
-					'title' => __( 'Custom Blocks', 'text-domain-1' ),
-					'icon'  => null,
-				),
-			)
+			HCB_PLUGIN_PATH . 'assets/build/blocks/highlighted-code-block'
 		);
 	}
 }

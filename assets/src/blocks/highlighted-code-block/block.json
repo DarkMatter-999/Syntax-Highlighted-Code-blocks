@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "dm-hcb/highlighted-code-block",
+  "title": "Highlighted code",
+  "category": "text",
+  "textdomain": "dm-hcb",
+  "version": "0.1.0",
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
+  "render": null,
+  "attributes": {
+    "language": {
+      "type": "string",
+      "default": "none"
+    },
+    "content": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

@@ -7,6 +7,7 @@
   "version": "0.1.0",
   "editorScript": "file:./index.js",
   "viewScript": "file:./view.js",
+  "style": "file:./index.css",
   "render": null,
   "attributes": {
     "language": {

@@ -1,0 +1,15 @@
+@import "~highlight.js/styles/atom-one-dark.css";
+
+.dm-hcb-code-preview pre, {
+	padding: 0;
+	margin: 0;
+	display: block;
+	overflow-x: auto;
+	width: 100%;
+}
+
+.dm-hcb-code-input textarea {
+	padding: 1em;
+	width: calc(100% - 2 * 1em);
+	max-width: calc(100% - 2 * 1em);
+}

@@ -1,37 +1,51 @@
 import { __ } from '@wordpress/i18n';
 import {
-	RichText,
+	PlainText,
 	useBlockProps,
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody, ComboboxControl } from '@wordpress/components';
+import { useMemo } from '@wordpress/element';
+import hljs from 'highlight.js';
+import './editor.scss';
 
+const LANGUAGES = hljs.listLanguages();
 const LANGUAGE_OPTIONS = [
 	{ label: __( 'None', 'dm-hcb' ), value: 'none' },
-	{ label: 'JavaScript', value: 'javascript' },
-	{ label: 'HTML', value: 'html' },
-	{ label: 'CSS', value: 'css' },
-	{ label: 'PHP', value: 'php' },
-	{ label: 'Python', value: 'python' },
+	...LANGUAGES.map( ( lang ) => {
+		const meta = hljs.getLanguage( lang );
+		return {
+			label: meta?.name || lang,
+			value: lang,
+		};
+	} ),
 ];
 
-/**
- * Editor UI for the highlighted code block.
- * - Provides a language selector in the block inspector.
- * - Provides a textarea for code content in the main canvas.
- * @param {Object}   props               - The props passed to the block editor component.
- * @param {Object}   props.attributes    - The attributes of the block.
- * @param {Function} props.setAttributes - Function to update block attributes.
- */
 export default function Edit( { attributes, setAttributes } ) {
-	const { language = 'none' } = attributes;
+	const { language = 'none', content = '' } = attributes;
 	const blockProps = useBlockProps();
 
+	const highlightedContent = useMemo( () => {
+		if ( ! content || language === 'none' ) {
+			return content;
+		}
+
+		const validLanguage = hljs.getLanguage( language )
+			? language
+			: 'plaintext';
+
+		try {
+			return hljs.highlight( content, { language: validLanguage } ).value;
+		} catch ( error ) {
+			return content;
+		}
+	}, [ content, language ] );
+
 	return (
-		<>
+		<div { ...blockProps } className="dm-hcb-code-block">
 			<InspectorControls>
 				<PanelBody
-					title={ __( 'Code settings', 'dm-hcb' ) }
+					title={ __( 'Code Settings', 'dm-hcb' ) }
 					initialOpen={ true }
 				>
 					<ComboboxControl
@@ -45,18 +59,34 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			<pre { ...blockProps }>
-				<RichText
-					tagName="code"
-					identifier="content"
-					value={ attributes.content }
-					onChange={ ( content ) => setAttributes( { content } ) }
-					placeholder={ __( 'Write code…', 'dm-hcb' ) }
-					aria-label={ __( 'Code' ) }
-					preserveWhiteSpace
-					__unstablePastePlainText
+			{ /* Input area */ }
+			<div className="dm-hcb-code-input">
+				<PlainText
+					tagName="textarea"
+					value={ content }
+					onChange={ ( newContent ) =>
+						setAttributes( { content: newContent } )
+					}
+					placeholder={ __( 'Write code here…', 'dm-hcb' ) }
+					style={ { fontFamily: 'monospace', minHeight: '100px' } }
 				/>
-			</pre>
-		</>
+			</div>
+
+			{ /* Preview area */ }
+			<div className="dm-hcb-code-preview">
+				<pre>
+					{ language === 'none' ? (
+						<code>{ content }</code>
+					) : (
+						<code
+							className={ `hljs language-${ language }` }
+							dangerouslySetInnerHTML={ {
+								__html: highlightedContent,
+							} }
+						/>
+					) }
+				</pre>
+			</div>
+		</div>
 	);
 }

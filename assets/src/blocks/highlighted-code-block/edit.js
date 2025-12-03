@@ -21,7 +21,7 @@ const LANGUAGE_OPTIONS = [
 	} ),
 ];
 
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( { attributes, setAttributes, isSelected } ) {
 	const { language = 'none', content = '' } = attributes;
 	const blockProps = useBlockProps();
 
@@ -42,7 +42,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	}, [ content, language ] );
 
 	return (
-		<div { ...blockProps } className="dm-hcb-code-block">
+		<div { ...blockProps }>
 			<InspectorControls>
 				<PanelBody
 					title={ __( 'Code Settings', 'dm-hcb' ) }
@@ -60,33 +60,40 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			{ /* Input area */ }
-			<div className="dm-hcb-code-input">
-				<PlainText
-					tagName="textarea"
-					value={ content }
-					onChange={ ( newContent ) =>
-						setAttributes( { content: newContent } )
-					}
-					placeholder={ __( 'Write code here…', 'dm-hcb' ) }
-					style={ { fontFamily: 'monospace', minHeight: '100px' } }
-				/>
-			</div>
+			{ isSelected && (
+				<div className="dm-hcb-code-input">
+					<PlainText
+						tagName="textarea"
+						value={ content }
+						onChange={ ( newContent ) =>
+							setAttributes( { content: newContent } )
+						}
+						placeholder={ __( 'Write code here…', 'dm-hcb' ) }
+						style={ {
+							fontFamily: 'monospace',
+							minHeight: '100px',
+						} }
+					/>
+				</div>
+			) }
 
 			{ /* Preview area */ }
-			<div className="dm-hcb-code-preview">
-				<pre>
-					{ language === 'none' ? (
-						<code>{ content }</code>
-					) : (
-						<code
-							className={ `hljs language-${ language }` }
-							dangerouslySetInnerHTML={ {
-								__html: highlightedContent,
-							} }
-						/>
-					) }
-				</pre>
-			</div>
+			{ ! isSelected && (
+				<div className="dm-hcb-code-preview">
+					<pre>
+						{ language === 'none' ? (
+							<code>{ content }</code>
+						) : (
+							<code
+								className={ `hljs language-${ language }` }
+								dangerouslySetInnerHTML={ {
+									__html: highlightedContent,
+								} }
+							/>
+						) }
+					</pre>
+				</div>
+			) }
 		</div>
 	);
 }

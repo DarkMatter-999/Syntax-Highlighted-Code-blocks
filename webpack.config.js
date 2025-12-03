@@ -1,5 +1,6 @@
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
 const path = require( 'path' );
 const fs = require( 'fs' );
 
@@ -65,6 +66,15 @@ module.exports = {
 		...defaultConfig.plugins,
 		new RemoveEmptyScriptsPlugin( {
 			stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
+		} ),
+		new CopyPlugin( {
+			patterns: [
+				{
+					// Copy all CSS files from highlight.js styles to build/themes
+					from: 'node_modules/highlight.js/styles/*.min.css',
+					to: 'themes/[name][ext]',
+				},
+			],
 		} ),
 	],
 };

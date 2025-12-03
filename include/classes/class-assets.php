@@ -63,16 +63,18 @@ class Assets {
 			true
 		);
 
-		// Enqueue selected highlight theme CSS on the frontend if option is set.
-		$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
-		if ( $selected_theme ) {
-			// Prefer the .min.css file (webpack copies minified files), fall back to .css.
-			$min_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.min.css';
-			$css_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.css';
-			if ( file_exists( $min_path ) ) {
-				wp_enqueue_style( 'dm-hcb-highlight-theme', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.min.css', array(), filemtime( $min_path ) );
-			} elseif ( file_exists( $css_path ) ) {
-				wp_enqueue_style( 'dm-hcb-highlight-theme', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.css', array(), filemtime( $css_path ) );
+		// Enqueue selected highlight theme CSS on the frontend if option is set and the block is present on the page.
+		if ( has_block( 'dm-hcb/highlighted-code-block' ) ) {
+			$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
+			if ( $selected_theme ) {
+				// Prefer the .min.css file (webpack copies minified files), fall back to .css.
+				$min_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.min.css';
+				$css_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.css';
+				if ( file_exists( $min_path ) ) {
+					wp_enqueue_style( 'dm-hcb-highlight-theme', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.min.css', array(), filemtime( $min_path ) );
+				} elseif ( file_exists( $css_path ) ) {
+					wp_enqueue_style( 'dm-hcb-highlight-theme', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.css', array(), filemtime( $css_path ) );
+				}
 			}
 		}
 	}
@@ -102,14 +104,16 @@ class Assets {
 		);
 
 		// Enqueue selected highlight theme CSS for front-end block assets as well.
-		$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
-		if ( $selected_theme ) {
-			$min_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.min.css';
-			$css_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.css';
-			if ( file_exists( $min_path ) ) {
-				wp_enqueue_style( 'dm-hcb-highlight-theme-block', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.min.css', array(), filemtime( $min_path ) );
-			} elseif ( file_exists( $css_path ) ) {
-				wp_enqueue_style( 'dm_hcb-highlight-theme-block', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.css', array(), filemtime( $css_path ) );
+		if ( has_block( 'dm-hcb/highlighted-code-block' ) ) {
+			$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
+			if ( $selected_theme ) {
+				$min_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.min.css';
+				$css_path = HCB_PLUGIN_PATH . 'assets/build/themes/' . $selected_theme . '.css';
+				if ( file_exists( $min_path ) ) {
+					wp_enqueue_style( 'dm-hcb-highlight-theme-block', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.min.css', array(), filemtime( $min_path ) );
+				} elseif ( file_exists( $css_path ) ) {
+					wp_enqueue_style( 'dm_hcb-highlight-theme-block', HCB_PLUGIN_URL . 'assets/build/themes/' . $selected_theme . '.css', array(), filemtime( $css_path ) );
+				}
 			}
 		}
 	}

@@ -2,7 +2,6 @@ import { createRoot, useState, useEffect, useMemo } from '@wordpress/element';
 import { ComboboxControl, Button, Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import hljs from 'highlight.js';
-import '../css/admin.scss';
 
 /**
  * Admin settings page for Highlighted Code Blocks, mounts into `#hcb-admin-app`.

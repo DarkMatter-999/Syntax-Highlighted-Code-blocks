@@ -48,7 +48,7 @@ class Assets {
 		$style_asset = include HCB_PLUGIN_PATH . 'assets/build/css/main.asset.php';
 		wp_enqueue_style(
 			'main-css',
-			HCB_PLUGIN_PATH . 'assets/build/css/main.css',
+			HCB_PLUGIN_URL . 'assets/build/css/main.css',
 			$style_asset['dependencies'],
 			$style_asset['version']
 		);
@@ -57,7 +57,7 @@ class Assets {
 
 		wp_enqueue_script(
 			'main-js',
-			HCB_PLUGIN_PATH . 'assets/build/js/main.js',
+			HCB_PLUGIN_URL . 'assets/build/js/main.js',
 			$script_asset['dependencies'],
 			$script_asset['version'],
 			true
@@ -88,7 +88,7 @@ class Assets {
 		$style_asset = include HCB_PLUGIN_PATH . 'assets/build/css/screen.asset.php';
 		wp_enqueue_style(
 			'block-css',
-			HCB_PLUGIN_PATH . 'assets/build/css/screen.css',
+			HCB_PLUGIN_URL . 'assets/build/css/screen.css',
 			$style_asset['dependencies'],
 			$style_asset['version']
 		);
@@ -97,7 +97,7 @@ class Assets {
 
 		wp_enqueue_script(
 			'block-js',
-			HCB_PLUGIN_PATH . 'assets/build/js/screen.js',
+			HCB_PLUGIN_URL . 'assets/build/js/screen.js',
 			$script_asset['dependencies'],
 			$script_asset['version'],
 			true
@@ -128,7 +128,7 @@ class Assets {
 
 		wp_enqueue_style(
 			'editor-css',
-			HCB_PLUGIN_PATH . 'assets/build/css/editor.css',
+			HCB_PLUGIN_URL . 'assets/build/css/editor.css',
 			$style_asset['dependencies'],
 			$style_asset['version']
 		);
@@ -137,7 +137,7 @@ class Assets {
 
 		wp_enqueue_script(
 			'editor-js',
-			HCB_PLUGIN_PATH . 'assets/build/js/editor.asset.php',
+			HCB_PLUGIN_URL . 'assets/build/js/editor.asset.php',
 			$script_asset['dependencies'],
 			$script_asset['version'],
 			true

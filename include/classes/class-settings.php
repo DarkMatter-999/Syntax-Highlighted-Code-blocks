@@ -38,7 +38,7 @@ class Settings {
 	 */
 	public function register_settings_page() {
 		add_theme_page(
-			__( 'Synatax Highlight Settings', 'dm-hcb' ),
+			__( 'Syntax Highlight Settings', 'dm-hcb' ),
 			__( 'Highlight Themes', 'dm-hcb' ),
 			'edit_theme_options',
 			'hcb-settings',

@@ -45,24 +45,6 @@ class Assets {
 	 * @return void
 	 */
 	public function enqueue_assets() {
-		$style_asset = include HCB_PLUGIN_PATH . 'assets/build/css/main.asset.php';
-		wp_enqueue_style(
-			'main-css',
-			HCB_PLUGIN_URL . 'assets/build/css/main.css',
-			$style_asset['dependencies'],
-			$style_asset['version']
-		);
-
-		$script_asset = include HCB_PLUGIN_PATH . 'assets/build/js/main.asset.php';
-
-		wp_enqueue_script(
-			'main-js',
-			HCB_PLUGIN_URL . 'assets/build/js/main.js',
-			$script_asset['dependencies'],
-			$script_asset['version'],
-			true
-		);
-
 		// Enqueue selected highlight theme CSS on the frontend if option is set and the block is present on the page.
 		if ( has_block( 'dm-hcb/highlighted-code-block' ) ) {
 			$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
@@ -85,24 +67,6 @@ class Assets {
 	 * @return void
 	 */
 	public function enqueue_block_assets() {
-		$style_asset = include HCB_PLUGIN_PATH . 'assets/build/css/screen.asset.php';
-		wp_enqueue_style(
-			'block-css',
-			HCB_PLUGIN_URL . 'assets/build/css/screen.css',
-			$style_asset['dependencies'],
-			$style_asset['version']
-		);
-
-		$script_asset = include HCB_PLUGIN_PATH . 'assets/build/js/screen.asset.php';
-
-		wp_enqueue_script(
-			'block-js',
-			HCB_PLUGIN_URL . 'assets/build/js/screen.js',
-			$script_asset['dependencies'],
-			$script_asset['version'],
-			true
-		);
-
 		// Enqueue selected highlight theme CSS for front-end block assets as well.
 		if ( has_block( 'dm-hcb/highlighted-code-block' ) ) {
 			$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
@@ -124,25 +88,6 @@ class Assets {
 	 * @return void
 	 */
 	public function enqueue_block_editor_assets() {
-		$style_asset = include HCB_PLUGIN_PATH . 'assets/build/css/editor.asset.php';
-
-		wp_enqueue_style(
-			'editor-css',
-			HCB_PLUGIN_URL . 'assets/build/css/editor.css',
-			$style_asset['dependencies'],
-			$style_asset['version']
-		);
-
-		$script_asset = include HCB_PLUGIN_PATH . 'assets/build/js/editor.asset.php';
-
-		wp_enqueue_script(
-			'editor-js',
-			HCB_PLUGIN_URL . 'assets/build/js/editor.asset.php',
-			$script_asset['dependencies'],
-			$script_asset['version'],
-			true
-		);
-
 		// Enqueue selected highlight theme CSS in the block editor to preview it in the editor.
 		$selected_theme = get_option( 'dm_hcb_selected_theme', '' );
 		if ( $selected_theme ) {
